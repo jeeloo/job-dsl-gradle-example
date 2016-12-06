@@ -28,3 +28,24 @@ job("$basePath/grails-example-deploy") {
         shell 'scp war file; restart...'
     }
 }
+
+buildFlowJob("build-flow") {
+    buildFlow('''
+        testSuites = build("job1")
+        artifacts = testSuites.getArtifacts()
+        artifacts.each {
+            println "${it}"
+        }
+    ''')
+}
+
+job("job1"){
+    steps {
+        shell 'touch t605_test_1.xml t605_test_2.xml dusg2_test_1.xml dusg2_test_2.xml'
+    }
+    publishers {
+        archiveArtifacts {
+            pattern('*.xml')
+        }
+    }
+}
