@@ -57,10 +57,14 @@ pipelineJob('Pipeline') {
       script("""
         node {
           stage('init') {
-            build 'Pipeline-init'
+            steps {
+              sh 'echo "Pipeline-init"'
+            }
           } 
           stage('build') {
-            build 'Pipeline-build'
+            steps {
+              sh 'echo "Pipeline-build"'
+            }
           }
         }
       """.stripIndent())      
