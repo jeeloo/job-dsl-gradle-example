@@ -49,3 +49,21 @@ job("job1"){
         }
     }
 }
+
+pipelineJob('Pipeline') {
+  definition {
+    cps {
+      sandbox()
+      script("""
+        node {
+          stage('init') {
+            build 'Pipeline-init'
+          } 
+          stage('build') {
+            build 'Pipeline-build'
+          }
+        }
+      """.stripIndent())      
+    }
+  }
+}
